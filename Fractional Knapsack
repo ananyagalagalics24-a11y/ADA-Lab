@@ -1,5 +1,5 @@
 #include<stdio.h>
-void main()
+int main()
 {
    float p[100],w[100],x[100],m,total;
    int n,k;
@@ -51,4 +51,5 @@ void main()
       }
 
       printf("total profit=%f",total);
+      return 0;
 }
