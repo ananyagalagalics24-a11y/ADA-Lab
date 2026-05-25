@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+// Function to return maximum of two numbers
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+// Knapsack DP function
+int knapsack(int n, int M, int W[], int P[]) {
+    int i, j;
+
+    int table[n + 1][M + 1];
+
+    // Initialize
+    for (i = 0; i <= n; i++)
+        table[i][0] = 0;
+
+    for (j = 0; j <= M; j++)
+        table[0][j] = 0;
+
+    // Fill DP table
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= M; j++) {
+            if (j < W[i - 1]) {
+                table[i][j] = table[i - 1][j];
+            } else {
+                table[i][j] = max(
+                    table[i - 1][j],
+                    P[i - 1] + table[i - 1][j - W[i - 1]]
+                );
+            }
+        }
+    }
+
+    return table[n][M];
+}
+
+int main() {
+    int n, M;
+
+    printf("Enter number of items: ");
+    scanf("%d", &n);
+
+    int W[n], P[n];
+
+    printf("Enter weights of items:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &W[i]);
+    }
+
+    printf("Enter profits of items:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &P[i]);
+    }
+
+    printf("Enter capacity of knapsack: ");
+    scanf("%d", &M);
+
+    int result = knapsack(n, M, W, P);
+
+    printf("Maximum Profit = %d\n", result);
+
+    return 0;
+}
